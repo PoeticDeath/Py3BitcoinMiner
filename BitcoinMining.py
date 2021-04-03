@@ -30,19 +30,16 @@ def cored_miner():
         print(f'{cur[1]:,}', f'{int(cur[1] / (time() - start)):,}', 'H/s' , end='\r')
     end = time()
     print("It took " + str(end - start) + " seconds to mine the block.")
-def testing():
+if __name__ == '__main__':
     ver = 2
     prev_block = "000000000000000117c80378b8da0e33559b5997f2ad55e2f7d18ec1975b9717"
     mrkl_root = "871714dcbae6c8193a2bb9b2a69fe1c0440399f38d94b3a0f1b447275a29978a"
     time_ = 0x53058b35 # 2014-02-20 04:57:25
-    bits = 0x19015f53
-    # https://en.bitcoin.it/wiki/Difficulty
+    bits = 0x19015f53 # https://en.bitcoin.it/wiki/Difficulty
     exp = bits >> 24
     mant = bits & 0xffffff
     target_hexstr = '%064x' % (mant * (1<<(8*(exp - 3))))
     target_str = bytes.fromhex(target_hexstr)
     cored_miner()
-if __name__ == '__main__':
-    #testing()
-    while True:
-        cored_miner()
+    #while True:
+    #    cored_miner()
