@@ -1,4 +1,4 @@
-def mine(ans, cur):
+def mine(cores, ans, cur):
     try:
         from random import randint
         import hashlib, struct
@@ -9,7 +9,7 @@ def mine(ans, cur):
             hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
             if count % 10000 == 0:
                 cur[1] = nonce
-                cur[2] = count
+                cur[2] = count * cores
             if hash[::-1] < target_str:
                 ans[1] = nonce
             nonce = randint(0, 4294967297)
@@ -26,8 +26,11 @@ def cored_miner():
     ans[1] = -1
     cur[1] = 0
     cur[2] = 0
+    n = 0
     start = time()
-    Process(target=mine, args=(ans, cur,)).start()
+    while n < cpu_count()*2:
+        Process(target=mine, args=(cpu_count()*2, ans, cur,)).start()
+        n += 1
     while ans[1] == -1:
         print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
     end = time()
