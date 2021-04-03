@@ -4,11 +4,12 @@ def mine(ans, cur):
         import hashlib, struct
         nonce = randint(0, 4294967297)
         count = 0
-        while ans[1] == -1:
+        while True:
             header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
             hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
-            cur[1] = nonce
-            cur[2] = count
+            if count % 10000 == 0:
+                cur[1] = nonce
+                cur[2] = count
             if hash[::-1] < target_str:
                 ans[1] = nonce
             nonce = randint(0, 4294967297)
