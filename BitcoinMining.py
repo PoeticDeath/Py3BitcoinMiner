@@ -1,7 +1,7 @@
 def mine(start, cores, ans, cur):
     try:
         import hashlib, struct
-        nonce = start
+        nonce = start + 347000000
         while nonce < 0x100000000:
             header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
             hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
@@ -23,7 +23,7 @@ def cored_miner():
     cur[1] = 0
     start = time()
     n = 0
-    while n < cpu_count()*2:
+    while n <= cpu_count()*2:
         Process(target=mine, args=(n, cpu_count()*2, ans, cur,), daemon=True).start()
         n += 1
     while ans[1] == -1:
@@ -31,15 +31,26 @@ def cored_miner():
     end = time()
     print("It took " + str(end - start) + " seconds to mine the block.")
 if __name__ == '__main__':
-    ver = 2
-    prev_block = "000000000000000117c80378b8da0e33559b5997f2ad55e2f7d18ec1975b9717"
-    mrkl_root = "871714dcbae6c8193a2bb9b2a69fe1c0440399f38d94b3a0f1b447275a29978a"
-    time_ = 0x53058b35 # 2014-02-20 04:57:25
-    bits = 0x19015f53 # https://en.bitcoin.it/wiki/Difficulty
-    exp = bits >> 24
-    mant = bits & 0xffffff
-    target_hexstr = '%064x' % (mant * (1<<(8*(exp - 3))))
-    target_str = bytes.fromhex(target_hexstr)
+    from datetime import datetime
+    # Block 286819
+    #ver = 2
+    #prev_block = "000000000000000117c80378b8da0e33559b5997f2ad55e2f7d18ec1975b9717"
+    #mrkl_root = "871714dcbae6c8193a2bb9b2a69fe1c0440399f38d94b3a0f1b447275a29978a"
+    #time_ = 0x53058b35 # 2014-02-20 04:57:25 EST
+    #int(datetime(2014,2,19,23,57,25,tzinfo=None).timestamp())
+    #bits = 0x19015f53 # https://en.bitcoin.it/wiki/Difficulty
+    #exp = bits >> 24
+    #mant = bits & 0xffffff
+    #target_hexstr = '%064x' % (mant * (1<<(8*(exp - 3))))
+    #target_str = bytes.fromhex(target_hexstr)
+    # Block 677658
+    #ver = 0x27ffe000
+    #prev_block = "000000000000000000000c9db4128ade8702786222cf7b68d91528cc87d513e3"
+    #mrkl_root = "03d3778a13afb165357e0d905ba5bea14e08f3f4c782f63c71ff49e96d584ff8"
+    #time_ = int(datetime(2021,4,3,21,58,5,tzinfo=None).timestamp())
+    #bits = 386673224
+    #exp = bits >> 24
+    #mant = bits & 0xffffff
+    #target_hexstr = '%064x' % (mant * (1<<(8*(exp - 3))))
+    #target_str = bytes.fromhex(target_hexstr)
     cored_miner()
-    #while True:
-    #    cored_miner()
