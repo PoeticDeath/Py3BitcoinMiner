@@ -35,7 +35,7 @@ try:
         while prev_block == old_block:
             prev_block = blockcypher.get_latest_block_hash()
             if ans[1] != -1:
-                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitheader " + ans[1])
+                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitheader " + str("\"") + ans[1] + str("\""))
                 print("Successfully solved block", str(blockcypher.get_latest_block_height(old_block)+1), "in", str(time() - start), "seconds.")
                 break
         P.terminate()
