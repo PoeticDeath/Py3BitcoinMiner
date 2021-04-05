@@ -19,8 +19,11 @@ while True:
     s = str(str(s)).replace("\\n", "")
     s = literal_eval(s)
     mrkl_root =
+    target_str = hex(s['difficulty'] * 2**(8*(0x1b -3)))[2:]
+    while len(target_str) < 64:
+        target_str = "0" + target_str
+    target_str = int("0x" + target_str, 16)
     bits =
-    target_str =
     P = Process(target=cored_miner, args=(ans,))
     P.start()
     while prev_block == old_block:
