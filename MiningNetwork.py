@@ -23,7 +23,7 @@ while True:
     while len(target_str) < 64:
         target_str = "0" + target_str
     target_str = int("0x" + target_str, 16)
-    bits =
+    bits = blockcypher.get_blockchain_overview(old_block)['bits']
     P = Process(target=cored_miner, args=(ans,))
     P.start()
     while prev_block == old_block:
