@@ -8,6 +8,7 @@ import os
 manager = Manager()
 ans = manager.dict()
 while True:
+    start = time()
     ans[1] = -1
     old_block = blockcypher.get_latest_block_hash()
     prev_block = old_block
@@ -30,5 +31,8 @@ while True:
         prev_block = blockcypher.get_latest_block_hash()
         if ans[1] != -1:
             os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitheader " + ans[1])
+            print("Successfully solved block", str(blockcypher.get_latest_block_height(old_block)+1), "in", str(time() - start), "seconds.")
             break
     P.terminate()
+    if ans[1] == -1:
+        print("Didn't solve block", str(blockcypher.get_latest_block_height(old_block)+1), "in time, lasted", str(time() - start), "seconds.")
