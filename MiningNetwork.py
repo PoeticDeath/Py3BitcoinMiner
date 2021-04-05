@@ -26,6 +26,6 @@ while True:
     while prev_block == old_block:
         prev_block = blockcypher.get_latest_block_hash()
         if ans[1] != -1:
-            os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock {ans[1]}")
+            os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + ans[1])
             break
     P.terminate()
