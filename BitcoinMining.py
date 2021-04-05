@@ -9,7 +9,7 @@ def mine(start, cores, ans, cur):
                 cur[1] = nonce
             if hash[::-1] < target_str:
                 ans[1] = nonce
-                ans[2] = str(hash[::-1])
+                ans[2] = str(header)
             nonce += cores
     except:
         exit()
