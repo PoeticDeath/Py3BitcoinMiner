@@ -33,10 +33,11 @@ def cored_miner():
         Process(target=mine, args=(cpu_count()*2, ans, cur,)).start()
         n += 1
     while ans[1] == -1:
-        print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
+        #print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
+        pass
     end = time()
     hexblock[1] = ans[2]
-    print("It took " + str(end - start) + " seconds to mine the block.")
+    #print("It took " + str(end - start) + " seconds to mine the block.")
 if __name__ == '__main__':
     from datetime import datetime
     from multiprocessing import Manager
