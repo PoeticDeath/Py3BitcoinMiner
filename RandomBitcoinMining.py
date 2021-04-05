@@ -12,7 +12,7 @@ def mine(cores, ans, cur):
                 cur[2] = count * cores
             if hash[::-1] < target_str:
                 ans[1] = nonce
-                ans[2] = str(hash[::-1])
+                ans[2] = str(header)
             nonce = randint(0, 4294967297)
             count += 1
     except:
