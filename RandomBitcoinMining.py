@@ -12,6 +12,7 @@ def mine(cores, ans, cur):
                 cur[2] = count * cores
             if hash[::-1] < target_str:
                 ans[1] = nonce
+                ans[2] = str(hash[::-1])
             nonce = randint(0, 4294967297)
             count += 1
     except:
@@ -34,9 +35,13 @@ def cored_miner():
     while ans[1] == -1:
         print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
     end = time()
+    hexblock[1] = ans[2]
     print("It took " + str(end - start) + " seconds to mine the block.")
 if __name__ == '__main__':
     from datetime import datetime
+    from multiprocessing import Manager
+    manager = Manager()
+    ans = manager.dict()
     # Block 286819
     #ver = 2
     #prev_block = "000000000000000117c80378b8da0e33559b5997f2ad55e2f7d18ec1975b9717"
@@ -58,4 +63,5 @@ if __name__ == '__main__':
     #mant = bits & 0xffffff
     #target_hexstr = '%064x' % (mant * (1<<(8*(exp - 3))))
     #target_str = bytes.fromhex(target_hexstr)
-    cored_miner()
+    cored_miner(ans[1])
+    print(ans[1])
