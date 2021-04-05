@@ -42,5 +42,6 @@ try:
         if ans[1] == -1:
             print("Didn't solve block", str(blockcypher.get_latest_block_height(old_block)+1), "in time, lasted", str(time() - start), "seconds.")
 except:
+    P.terminate()
     B.terminate()
     exit()
