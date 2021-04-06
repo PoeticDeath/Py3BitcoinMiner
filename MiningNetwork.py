@@ -40,16 +40,16 @@ try:
                 merklehashes.append(merklehashes[-1])
             merklehashes = [dblsha(merklehashes[i] + merklehashes[i + 1]) for i in range(0, len(merklehashes), 2)]
         mrkl_root = str(hex(int().from_bytes(merklehashes[0], byteorder='big'))).replace("0x", "")
-        time_ = int(str(r['curtime']), 16)
+        time_ = r['curtime']
         bits = int(str(r['bits']), 16)
-        target_str = hex(int(s['difficulty']) * 2**(8*(0x1b -3)))[2:]
+        exp = bits >> 24
+        mant = bits & 0xffffff
+        target_hexstr = '%064x' % (mant * (1<<(8*(exp - 3))))
+        target_str = bytes.fromhex(target_hexstr)
         old_block = r['height']
         ol_block = old_block
         prev_block = r['previousblockhash']
-        while len(target_str) < 64:
-            target_str = "0" + target_str
-        target_str = int("0x" + target_str, 16)
-        print(ver, prev_block, mrkl_root, time_, bits, target_str)
+        #print(ver, prev_block, mrkl_root, time_, bits, target_str)
         P = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
         P.start()
         while ol_block == old_block:
@@ -61,7 +61,8 @@ try:
             n = literal_eval(n)
             ol_block = n['height']
             if ans[1] != -1:
-                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitheader " + str("\"") + ans[1] + str("\""))
+                #print(ans[1])
+                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[1] + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
         P.terminate()
