@@ -15,6 +15,10 @@ def Bitcoind():
     os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoind -prune=550 -wallet=PoeticDeath")
 def dblsha(data):
  	return hashlib.sha256(hashlib.sha256(data).digest()).digest()
+def varintEncode(n):
+    if n < 0xfd:
+      return struct.pack('<B', n)
+    return b'\xfd' + struct.pack('<H', n)
 B = Process(target=Bitcoind)
 B.start()
 sleep(30)
@@ -65,13 +69,21 @@ try:
             n = literal_eval(n)
             ol_block = n['height']
             if ans[1] != -1:
-                print("\n", ans[1], "\n")
-                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[1] + str("\""))
+                blkdata = ans[1] + varintEncode(len(r['transactions']))
+                if 'submit/coinbase' not in r['mutable']:
+                    for txn in txnlist[1:]:
+                        blkdata += txn
+                print("\n", blkdata, "\n")
+                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
             if ans[2] != -1:
-                print("\n", ans[2], "\n")
-                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[2] + str("\""))
+                blkdata = ans[2] + varintEncode(len(r['transactions']))
+                if 'submit/coinbase' not in r['mutable']:
+                    for txn in txnlist[1:]:
+                        blkdata += txn
+                print("\n", blkdata, "\n")
+                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
         PS.terminate()
