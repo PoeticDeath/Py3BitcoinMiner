@@ -1,3 +1,4 @@
+from RandomBitcoinMining import cored_miner as random_cored_miner
 from BitcoinMining import cored_miner
 from multiprocessing import Process, Manager
 from ast import literal_eval
@@ -50,8 +51,10 @@ try:
         ol_block = old_block
         prev_block = r['previousblockhash']
         #print(ver, prev_block, mrkl_root, time_, bits, target_str)
-        P = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
-        P.start()
+        PS = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
+        PS.start()
+        PR = Process(target=random_cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
+        PR.start()
         while ol_block == old_block:
             n = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getblocktemplate {'\"rules\": [\"segwit\"]'}", shell=True)
             n = str(n).replace("b\'", "")
@@ -65,10 +68,17 @@ try:
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[1] + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
-        P.terminate()
+            if ans[2] != -1:
+                #print(ans[2])
+                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[2] + str("\""))
+                print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
+                break
+        PS.terminate()
+        PR.terminate()
         if ans[1] == -1:
             print("Didn't solve block", str(r['height']), "in time, lasted", str(time() - start), "seconds.")
 except KeyboardInterrupt:
-    P.terminate()
+    PS.terminate()
+    PR.terminate()
     B.terminate()
     exit()
