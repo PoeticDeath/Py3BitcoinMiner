@@ -65,12 +65,12 @@ try:
             n = literal_eval(n)
             ol_block = n['height']
             if ans[1] != -1:
-                #print(ans[1])
+                print("\n", ans[1], "\n")
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[1] + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
             if ans[2] != -1:
-                #print(ans[2])
+                print("\n", ans[2], "\n")
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + ans[2] + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
