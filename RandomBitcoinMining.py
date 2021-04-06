@@ -36,7 +36,7 @@ def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
         #print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
         pass
     end = time()
-    hexblock[1] = ans[2]
+    hexblock[2] = ans[2]
     #print("It took " + str(end - start) + " seconds to mine the block.")
 if __name__ == '__main__':
     from datetime import datetime
