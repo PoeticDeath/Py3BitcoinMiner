@@ -56,9 +56,9 @@ try:
         prev_block = r['previousblockhash']
         ver = r['version']
         #print(ver, prev_block, mrkl_root, time_, bits, target_str)
-        PS = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,), daemon=True)
+        PS = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
         PS.start()
-        PR = Process(target=random_cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,), daemon=True)
+        PR = Process(target=random_cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
         PR.start()
         while ol_block == old_block:
             n = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getblocktemplate {'\"rules\": [\"segwit\"]'}", shell=True)
