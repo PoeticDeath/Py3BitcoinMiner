@@ -86,10 +86,12 @@ try:
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
+        if ans[1] and ans[2] == -1:
+            print("Didn't solve block", str(r['height']), "in time, lasted", str(time() - start), "seconds.")
+            ans[1] = ans[2] = 0
+        sleep(10)
         PS.terminate()
         PR.terminate()
-        if ans[1] == -1:
-            print("Didn't solve block", str(r['height']), "in time, lasted", str(time() - start), "seconds.")
 except KeyboardInterrupt:
     PS.terminate()
     PR.terminate()
