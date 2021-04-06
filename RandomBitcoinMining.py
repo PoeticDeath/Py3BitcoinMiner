@@ -30,7 +30,7 @@ def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
     n = 0
     start = time()
     while n < cpu_count()*2:
-        Process(target=mine, args=(cpu_count()*2, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str,)).start()
+        Process(target=mine, args=(cpu_count()*2, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str,), daemon=True).start()
         n += 1
     while ans[1] == -1:
         #print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
