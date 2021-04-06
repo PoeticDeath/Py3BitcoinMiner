@@ -15,7 +15,7 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
                 ans[2] = str(header)
             nonce = randint(0, 4294967297)
             count += 1
-    except:
+    except KeyboardInterrupt:
         exit()
 def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
     from time import time
