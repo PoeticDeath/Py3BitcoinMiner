@@ -5,6 +5,7 @@ from time import sleep
 from time import time
 import blockcypher
 import subprocess
+import binascii
 import os
 manager = Manager()
 ans = manager.dict()
@@ -57,7 +58,7 @@ try:
         P.terminate()
         if ans[1] == -1:
             print("Didn't solve block", str(blockcypher.get_latest_block_height(old_block)+1), "in time, lasted", str(time() - start), "seconds.")
-except:
+except KeyboardInterrupt:
     P.terminate()
     B.terminate()
     exit()
