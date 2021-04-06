@@ -1,6 +1,7 @@
 from BitcoinMining import cored_miner
 from multiprocessing import Process, Manager
 from ast import literal_eval
+from time import sleep
 from time import time
 import blockcypher
 import subprocess
@@ -13,6 +14,7 @@ def dblsha(data):
  	return hashlib.sha256(hashlib.sha256(data).digest()).digest()
 B = Process(target=Bitcoind)
 B.start()
+sleep(30)
 try:
     while True:
         start = time()
