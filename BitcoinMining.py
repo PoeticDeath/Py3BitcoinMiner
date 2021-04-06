@@ -11,7 +11,7 @@ def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target
                 ans[1] = nonce
                 ans[2] = str(header)
             nonce += cores
-    except:
+    except KeyboardInterrupt:
         exit()
 def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
     from time import time
