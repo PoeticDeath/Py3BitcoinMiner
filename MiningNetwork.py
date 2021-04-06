@@ -34,7 +34,7 @@ try:
         txnlist = [binascii.a2b_hex(a['data']) for a in r['transactions']]
         merklehashes = [dblsha(t) for t in txnlist]
         while len(merklehashes) > 1:
-	        if len(merklehashes) % 2:
+            if len(merklehashes) % 2:
                 merklehashes.append(merklehashes[-1])
             merklehashes = [dblsha(merklehashes[i] + merklehashes[i + 1]) for i in range(0, len(merklehashes), 2)]
         mrkl_root = merklehashes[0]
