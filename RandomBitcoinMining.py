@@ -1,4 +1,4 @@
-def mine(cores, ans, cur):
+def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
     try:
         from random import randint
         import hashlib, struct
@@ -17,7 +17,7 @@ def mine(cores, ans, cur):
             count += 1
     except:
         exit()
-def cored_miner():
+def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
     from time import time
     from multiprocessing import Process, Manager
     from psutil import cpu_count
@@ -30,7 +30,7 @@ def cored_miner():
     n = 0
     start = time()
     while n < cpu_count()*2:
-        Process(target=mine, args=(cpu_count()*2, ans, cur,)).start()
+        Process(target=mine, args=(cpu_count()*2, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str,)).start()
         n += 1
     while ans[1] == -1:
         #print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
