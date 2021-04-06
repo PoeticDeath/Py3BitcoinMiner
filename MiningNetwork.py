@@ -23,7 +23,6 @@ try:
         start = time()
         ans[1] = -1
         ans[2] = -1
-        ver = 4
         s = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getmininginfo", shell=True)
         s = str(s).replace("b\'", "")
         s = str(s).replace("\'", "")
@@ -51,6 +50,7 @@ try:
         old_block = r['height']
         ol_block = old_block
         prev_block = r['previousblockhash']
+        ver = r['version']
         #print(ver, prev_block, mrkl_root, time_, bits, target_str)
         PS = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
         PS.start()
