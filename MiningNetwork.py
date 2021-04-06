@@ -28,6 +28,7 @@ try:
         r = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getblocktemplate {'\"rules\": [\"segwit\"]'}", shell=True)
         r = str(str(r)).replace("b\'", "")
         r = str(str(r)).replace("\'", "")
+        r = str(str(r)).replace("\n", "")
         r = str(str(r)).replace("\\n", "")
         r = literal_eval(r)
         txnlist = [binascii.a2b_hex(a['data']) for a in r['transactions']]
