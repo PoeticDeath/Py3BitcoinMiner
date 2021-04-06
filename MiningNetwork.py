@@ -6,6 +6,7 @@ from time import time
 import blockcypher
 import subprocess
 import binascii
+import hashlib
 import os
 manager = Manager()
 ans = manager.dict()
