@@ -3,6 +3,8 @@ def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target
         import hashlib, struct
         nonce = start
         while nonce < 0x100000000:
+            if ans[2] != -1:
+                exit()
             header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
             hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
             if nonce % 10000 == 0:
@@ -21,6 +23,7 @@ def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
     ans = manager.dict()
     cur = manager.dict()
     ans[1] = -1
+    ans[2] = -1
     cur[1] = 0
     start = time()
     n = 0
