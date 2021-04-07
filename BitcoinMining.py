@@ -16,7 +16,7 @@ def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target
     except KeyboardInterrupt:
         exit()
 def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
-    from time import time
+    from time import time, sleep
     from multiprocessing import Process, Manager
     from psutil import cpu_count
     manager = Manager()
