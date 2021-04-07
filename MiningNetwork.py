@@ -27,6 +27,8 @@ try:
         start = time()
         ans[1] = -1
         ans[2] = -1
+        ans[3] = -1
+        ans[4] = -1
         s = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getmininginfo", shell=True)
         s = str(s).replace("b\'", "")
         s = str(s).replace("\'", "")
@@ -68,15 +70,6 @@ try:
             n = str(n).replace("\\n", "")
             n = literal_eval(n)
             ol_block = n['height']
-            if ans[1] != -1:
-                blkdata = ans[1] + varintEncode(len(r['transactions']))
-                if 'submit/coinbase' not in r['mutable']:
-                    for txn in txnlist[1:]:
-                        blkdata += txn
-                print("\n", blkdata, "\n")
-                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
-                print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
-                break
             if ans[2] != -1:
                 blkdata = ans[2] + varintEncode(len(r['transactions']))
                 if 'submit/coinbase' not in r['mutable']:
@@ -86,14 +79,23 @@ try:
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
-        if ans[1] and ans[2] == -1:
+            if ans[4] != -1:
+                blkdata = ans[4] + varintEncode(len(r['transactions']))
+                if 'submit/coinbase' not in r['mutable']:
+                    for txn in txnlist[1:]:
+                        blkdata += txn
+                print("\n", blkdata, "\n")
+                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
+                print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
+                break
+        if ans[1] and ans[2] and ans[3] and ans[4] == -1:
             print("Didn't solve block", str(r['height']), "in time, lasted", str(time() - start), "seconds.")
-            ans[1] = ans[2] = 0
+            ans[1] = ans[2] = ans[3] = ans[4] = 0
         sleep(10)
         PS.terminate()
         PR.terminate()
 except KeyboardInterrupt:
-    ans[1] = ans[2] = 0
+    ans[1] = ans[2] = ans[3] = ans[4] = 0
     sleep(10)
     PS.terminate()
     PR.terminate()
