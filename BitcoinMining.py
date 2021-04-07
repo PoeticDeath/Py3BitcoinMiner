@@ -3,7 +3,7 @@ def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target
         import hashlib, struct
         nonce = start
         while nonce < 0x100000000:
-            if ans[2] != -1:
+            if ans[1] and ans[2] == 0:
                 exit()
             header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
             hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
@@ -15,15 +15,12 @@ def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target
             nonce += cores
     except KeyboardInterrupt:
         exit()
-def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
+def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
     from time import time
     from multiprocessing import Process, Manager
     from psutil import cpu_count
     manager = Manager()
-    ans = manager.dict()
     cur = manager.dict()
-    ans[1] = -1
-    ans[2] = -1
     cur[1] = 0
     start = time()
     n = 0
@@ -37,7 +34,6 @@ def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
             exit()
         pass
     end = time()
-    hexblock[1] = ans[2]
     #print("It took " + str(end - start) + " seconds to mine the block.")
 if __name__ == '__main__':
     from datetime import datetime
