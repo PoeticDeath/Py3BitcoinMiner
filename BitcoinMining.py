@@ -32,6 +32,9 @@ def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
         n += 1
     while ans[1] == -1:
         #print(f'{cur[1]:,}', f'{int(cur[1] / (time() - start)):,}', 'H/s' , end='\r')
+        if ans[1] and ans[2] == 0:
+            sleep(5)
+            exit()
         pass
     end = time()
     hexblock[1] = ans[2]
