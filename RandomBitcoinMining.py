@@ -5,7 +5,7 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
         nonce = randint(0, 4294967297)
         count = 0
         while True:
-            if ans[1] and ans[2] == 0:
+            if ans[3] and ans[4] == 0:
                 exit()
             header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
             hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
@@ -13,8 +13,8 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
                 cur[1] = nonce
                 cur[2] = count * cores
             if hash[::-1] < target_str:
-                ans[1] = nonce
-                ans[2] = str(header)
+                ans[3] = nonce
+                ans[4] = str(header)
             nonce = randint(0, 4294967297)
             count += 1
     except KeyboardInterrupt:
@@ -32,9 +32,9 @@ def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
     while n < cpu_count()//2:
         Process(target=mine, args=(cpu_count()//2, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str,), daemon=True).start()
         n += 1
-    while ans[1] == -1:
+    while ans[3] == -1:
         #print(f'{cur[1]:,}' + ' ' + f'{cur[2]:,}', f'{int(cur[2] / (time() - start)):,}', 'H/s  ' , end='\r')
-        if ans[1] and ans[2] == 0:
+        if ans[3] and ans[4] == 0:
             sleep(5)
             exit()
         pass
