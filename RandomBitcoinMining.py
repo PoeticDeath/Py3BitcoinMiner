@@ -3,20 +3,22 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
         from random import randint
         import hashlib, struct
         nonce = randint(0, 4294967297)
-        count = 0
         while True:
-            if ans[3] and ans[4] == 0:
-                exit()
-            header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
-            hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
-            if count % 10000 == 0:
-                cur[1] = nonce
-                cur[2] = count * cores
-            if hash[::-1] < target_str:
-                ans[3] = nonce
-                ans[4] = str(header)
-            nonce = randint(0, 4294967297)
-            count += 1
+            count = 0
+            while count < 0x100000000:
+                if ans[3] and ans[4] == 0:
+                    exit()
+                header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
+                if count % 10000 == 0:
+                    cur[1] = nonce
+                    cur[2] = count * cores
+                if hash[::-1] < target_str:
+                    ans[3] = nonce
+                    ans[4] = str(header)
+                nonce = randint(0, 4294967297)
+                count += 1
+            ver += 1
     except KeyboardInterrupt:
         exit()
 def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
