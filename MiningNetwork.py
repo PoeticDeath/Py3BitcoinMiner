@@ -17,7 +17,7 @@ def dblsha(data):
  	return hashlib.sha256(hashlib.sha256(data).digest()).digest()
 def varintEncode(n):
     if n < 0xfd:
-      return struct.pack('<B', n)
+        return struct.pack('<B', n)
     return b'\xfd' + struct.pack('<H', n)
 B = Process(target=Bitcoind)
 B.start()
