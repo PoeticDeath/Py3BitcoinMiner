@@ -19,7 +19,7 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
             count += 1
     except KeyboardInterrupt:
         exit()
-def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
+def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
     from time import time
     from multiprocessing import Process, Manager
     from psutil import cpu_count
@@ -39,7 +39,6 @@ def cored_miner(hexblock, ver, prev_block, mrkl_root, time_, bits, target_str):
             exit()
         pass
     end = time()
-    hexblock[2] = ans[2]
     #print("It took " + str(end - start) + " seconds to mine the block.")
 if __name__ == '__main__':
     from datetime import datetime
