@@ -93,6 +93,8 @@ try:
         PS.terminate()
         PR.terminate()
 except KeyboardInterrupt:
+    ans[1] = ans[2] = 0
+    sleep(10)
     PS.terminate()
     PR.terminate()
     B.terminate()
