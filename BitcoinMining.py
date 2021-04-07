@@ -1,18 +1,20 @@
 def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
     try:
         import hashlib, struct
-        nonce = start
-        while nonce < 0x100000000:
-            if ans[1] and ans[2] == 0:
-                exit()
-            header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
-            hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
-            if nonce % 10000 == 0:
-                cur[1] = nonce
-            if hash[::-1] < target_str:
-                ans[1] = nonce
-                ans[2] = str(header)
-            nonce += cores
+        while True:
+            nonce = start
+            while nonce < 0x100000000:
+                if ans[1] and ans[2] == 0:
+                    exit()
+                header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
+                if nonce % 10000 == 0:
+                    cur[1] = nonce
+                if hash[::-1] < target_str:
+                    ans[1] = nonce
+                    ans[2] = str(header)
+                nonce += cores
+            ver += 1
     except KeyboardInterrupt:
         exit()
 def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
