@@ -15,7 +15,7 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
                     cur[2] = count * cores
                 if hash[::-1] < target_str:
                     ans[3] = nonce
-                    ans[4] = str(header)
+                    ans[4] = header
                 nonce = randint(0, 4294967297)
                 count += 1
             ver += 1
