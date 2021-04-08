@@ -12,7 +12,7 @@ def mine(start, cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target
                     cur[1] = nonce
                 if hash[::-1] < target_str:
                     ans[1] = nonce
-                    ans[2] = str(header)
+                    ans[2] = header
                 nonce += cores
             ver += 1
     except KeyboardInterrupt:
