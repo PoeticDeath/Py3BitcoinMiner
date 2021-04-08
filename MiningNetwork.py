@@ -7,7 +7,7 @@ from time import time
 import blockcypher
 import subprocess
 import binascii
-import hashlib
+import hashlib, struct
 import os
 manager = Manager()
 ans = manager.dict()
@@ -71,19 +71,19 @@ try:
             n = literal_eval(n)
             ol_block = n['height']
             if ans[2] != -1:
-                blkdata = ans[2] + varintEncode(len(r['transactions']))
+                blkdata = ans[2] + varintEncode(len(r['transactions'])).hex()
                 if 'submit/coinbase' not in r['mutable']:
                     for txn in txnlist[1:]:
-                        blkdata += txn
+                        blkdata += txn.hex()
                 print("\n", blkdata, "\n")
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
             if ans[4] != -1:
-                blkdata = ans[4] + varintEncode(len(r['transactions']))
+                blkdata = ans[4] + varintEncode(len(r['transactions'])).hex()
                 if 'submit/coinbase' not in r['mutable']:
                     for txn in txnlist[1:]:
-                        blkdata += txn
+                        blkdata += txn.hex()
                 print("\n", blkdata, "\n")
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
