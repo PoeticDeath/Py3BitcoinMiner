@@ -71,7 +71,7 @@ try:
             n = literal_eval(n)
             ol_block = n['height']
             if ans[2] != -1:
-                blkdata = ans[2] + varintEncode(len(r['transactions'])).hex()
+                blkdata = ans[2].hex() + varintEncode(len(r['transactions'])).hex()
                 if 'submit/coinbase' not in r['mutable']:
                     for txn in txnlist[1:]:
                         blkdata += txn.hex()
@@ -80,7 +80,7 @@ try:
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
             if ans[4] != -1:
-                blkdata = ans[4] + varintEncode(len(r['transactions'])).hex()
+                blkdata = ans[4].hex() + varintEncode(len(r['transactions'])).hex()
                 if 'submit/coinbase' not in r['mutable']:
                     for txn in txnlist[1:]:
                         blkdata += txn.hex()
