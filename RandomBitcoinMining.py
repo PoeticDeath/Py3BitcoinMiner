@@ -5,7 +5,7 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
         nonce = randint(0, 4294967297)
         while True:
             count = 0
-            while count < 2000000:
+            while count < 2**32:
                 header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
                 hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
                 if count % 10000 == 0:
