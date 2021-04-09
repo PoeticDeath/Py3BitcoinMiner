@@ -6,13 +6,13 @@ def mine(cores, ans, cur, ver, prev_block, mrkl_root, time_, bits, target_str):
         while True:
             count = 0
             while count < 2000000:
-                if ans[3] and ans[4] == 0:
-                    exit()
                 header = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
                 hash = hashlib.sha256(hashlib.sha256(header).digest()).digest()
                 if count % 10000 == 0:
                     cur[1] = nonce
                     cur[2] = count * cores
+                    if ans[3] and ans[4] == 0:
+                        exit()
                 if hash[::-1] < target_str:
                     ans[3] = nonce
                     ans[4] = header
