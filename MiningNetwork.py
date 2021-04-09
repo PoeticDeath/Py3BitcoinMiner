@@ -75,8 +75,8 @@ try:
                 if 'submit/coinbase' not in r['mutable']:
                     for txn in txnlist[1:]:
                         blkdata += txn.hex()
-                print("\n", blkdata, "\n")
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
+                print("\n" + blkdata + "\n")
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
             if ans[4] != -1:
@@ -84,8 +84,8 @@ try:
                 if 'submit/coinbase' not in r['mutable']:
                     for txn in txnlist[1:]:
                         blkdata += txn.hex()
-                print("\n", blkdata, "\n")
                 os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
+                print("\n" + blkdata + "\n")
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
         if ans[1] and ans[2] and ans[3] and ans[4] == -1:
