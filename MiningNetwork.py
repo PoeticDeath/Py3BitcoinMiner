@@ -4,7 +4,6 @@ from multiprocessing import Process, Manager
 from ast import literal_eval
 from time import sleep
 from time import time
-import blockcypher
 import subprocess
 import binascii
 import hashlib, struct
