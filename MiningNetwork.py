@@ -1,4 +1,3 @@
-from RandomBitcoinMining import cored_miner as random_cored_miner
 from BitcoinMining import cored_miner
 from multiprocessing import Process, Manager
 from ast import literal_eval
@@ -26,8 +25,6 @@ try:
         start = time()
         ans[1] = -1
         ans[2] = -1
-        ans[3] = -1
-        ans[4] = -1
         s = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getmininginfo", shell=True)
         s = str(s).replace("b\'", "")
         s = str(s).replace("\'", "")
@@ -56,11 +53,8 @@ try:
         ol_block = old_block
         prev_block = r['previousblockhash']
         ver = r['version']
-        #print(ver, prev_block, mrkl_root, time_, bits, target_str)
         PS = Process(target=cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
         PS.start()
-        PR = Process(target=random_cored_miner, args=(ans, ver, prev_block, mrkl_root, time_, bits, target_str,))
-        PR.start()
         while ol_block == old_block:
             n = subprocess.check_output("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli getblocktemplate {'\"rules\": [\"segwit\"]'}", shell=True)
             n = str(n).replace("b\'", "")
@@ -78,25 +72,14 @@ try:
                 print("\n" + blkdata + "\n")
                 print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
                 break
-            if ans[4] != -1:
-                blkdata = ans[4].hex() + varintEncode(len(r['transactions'])).hex()
-                if 'submit/coinbase' not in r['mutable']:
-                    for txn in txnlist[1:]:
-                        blkdata += txn.hex()
-                os.system("/Programs/Bitcoin/bitcoin-0.21.0/bin/bitcoin-cli submitblock " + str("\"") + blkdata + str("\""))
-                print("\n" + blkdata + "\n")
-                print("Successfully solved block", str(r['height']), "in", str(time() - start), "seconds.")
-                break
-        if ans[1] and ans[2] and ans[3] and ans[4] == -1:
+        if ans[1] and ans[2] == -1:
             print("Didn't solve block", str(r['height']), "in time, lasted", str(time() - start), "seconds.")
-            ans[1] = ans[2] = ans[3] = ans[4] = 0
+            ans[1] = ans[2] = 0
         sleep(10)
         PS.terminate()
-        PR.terminate()
 except KeyboardInterrupt:
-    ans[1] = ans[2] = ans[3] = ans[4] = 0
+    ans[1] = ans[2] = 0
     sleep(10)
     PS.terminate()
-    PR.terminate()
     B.terminate()
     exit()
