@@ -10,6 +10,51 @@ def mine(start, cores, ans, ver, prev_block, mrkl_root, time_, bits, target_str)
                         ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
                         return
                     nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
+                    if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
+                        ans[1] = nonce
+                        ans[2] = ( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))
+                        return
+                    nonce += cores
                 if ans[1] and ans[2] == 0:
                     exit()
                 if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
