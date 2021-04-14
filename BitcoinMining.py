@@ -2,7 +2,7 @@ def mine(start, cores, ans, ver, prev_block, mrkl_root, time_, bits, target_str)
     try:
         import hashlib, struct
         nonce = start
-        while True:
+        while ver % 2**32 != 0:
             while nonce % 2**32 != 0:
                 while nonce % 10000 != 0:
                     if hashlib.sha256(hashlib.sha256(( struct.pack("<L", ver) + bytes.fromhex(prev_block)[::-1] + bytes.fromhex(mrkl_root)[::-1] + struct.pack("<LLL", time_, bits, nonce))).digest()).digest()[::-1] < target_str:
