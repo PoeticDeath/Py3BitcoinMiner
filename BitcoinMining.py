@@ -18,6 +18,7 @@ def mine(start, cores, ans, ver, prev_block, mrkl_root, time_, bits, target_str)
                     return
                 nonce += cores
             ver += 1
+        return
     except KeyboardInterrupt:
         exit()
 def cored_miner(ans, ver, prev_block, mrkl_root, time_, bits, target_str):
